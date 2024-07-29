@@ -1,25 +1,21 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const cors = require('cors');
-const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Enable CORS
 app.use(cors());
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Utility function to wait for a specified time
 const waitForTimeout = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
-app.get('/api/scrape', async (req, res) => {
+app.get('/scrape', async (req, res) => {
   try {
     console.log('Launching browser...');
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false }); // headless: false to see the browser
     const page = await browser.newPage();
 
     console.log('Navigating to the login page...');
@@ -101,5 +97,5 @@ app.get('/api/scrape', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log("Server is running on http://localhost:${PORT}");
 });
