@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "npm install puppeteer cors express"
+    "postinstall": "npx puppeteer browsers install chrome && npx puppeteer browsers list"
   },
   "keywords": [],
   "author": "",
