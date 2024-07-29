@@ -8,7 +8,7 @@ const waitForTimeout = (milliseconds) => {
 const scrapeData = async () => {
   try {
     console.log('Launching browser...');
-    const browser = await puppeteer.launch({ headless: true }); // Use headless mode for production
+    const browser = await puppeteer.launch({ headless: false }); // headless: false to see the browser
     const page = await browser.newPage();
 
     console.log('Navigating to the login page...');
