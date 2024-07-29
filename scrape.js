@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS
 app.use(cors());
 
-// Serve static files from the "public" directory
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Utility function to wait for a specified time
@@ -16,10 +16,10 @@ const waitForTimeout = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
-app.get('/scrape', async (req, res) => {
+app.get('/api/scrape', async (req, res) => {
   try {
     console.log('Launching browser...');
-    const browser = await puppeteer.launch({ headless: false }); // headless: false to see the browser
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
     console.log('Navigating to the login page...');
