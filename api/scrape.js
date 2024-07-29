@@ -89,4 +89,16 @@ const scrapeData = async () => {
   }
 };
 
+// Install Puppeteer browsers if not already installed
+(async () => {
+  try {
+    console.log('Installing Puppeteer browsers...');
+    await puppeteer.install();
+    console.log('Puppeteer browsers installed successfully');
+  } catch (error) {
+    console.error('Error installing Puppeteer browsers:', error);
+  }
+})();
+
+
 module.exports = scrapeData;
