@@ -5,7 +5,7 @@ const scrapeData = require('./api/scrape');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS
+// Enable CORS for all origins
 app.use(cors());
 
 // Serve static files from the 'public' directory
