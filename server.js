@@ -1,11 +1,22 @@
+const express = require('express');
+const path = require('path');
 const puppeteer = require('puppeteer');
+const cors = require('cors');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Enable CORS
+app.use(cors());
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Utility function to wait for a specified time
 const waitForTimeout = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
-const scrapeData = async () => {
+app.get('/scrape', async (req, res) => {
   try {
     console.log('Launching browser...');
     const browser = await puppeteer.launch({ headless: true }); // Use headless mode for production
@@ -81,12 +92,19 @@ const scrapeData = async () => {
     console.log('Closing the browser...');
     await browser.close();
 
-    return { schedule: tableData, personalInfo: personalInfo };
+    res.json({ schedule: tableData, personalInfo: personalInfo });
 
   } catch (error) {
-    console.error('Error during scraping:', error);
-    throw error;
+    console.error(error);
+    res.status(500).send('Error scraping data');
   }
-};
+});
 
-module.exports = scrapeData;
+// Catch-all route to serve the index.html file for any other requests
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
